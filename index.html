@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#dfe7e4">
+<meta name="description" content="내가 몰랐던 또 다른 계절 — ANOTHER SEASON">
+<title>내가 몰랐던 또 다른 계절 — ANOTHER SEASON</title>
+
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:#dfe5e3;color:#303332;
+  font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;
+  line-height:1.9;word-break:keep-all
+}
+.book{width:100%;max-width:760px;margin:0 auto}
+.page{
+  position:relative;min-height:100svh;padding:76px 30px 88px;
+  display:flex;flex-direction:column;justify-content:center;overflow:hidden;
+  isolation:isolate;background:#f3f5f3
+}
+.page::before{
+  content:"";position:absolute;inset:0;z-index:-3;
+  background:
+    radial-gradient(circle at 20% 20%,rgba(255,255,255,.9),transparent 34%),
+    radial-gradient(circle at 80% 70%,rgba(255,255,255,.65),transparent 38%),
+    linear-gradient(135deg,#eef2ef,#dfe8e5 48%,#f1eee8)
+}
+.page::after{
+  content:"";position:absolute;inset:-15%;z-index:-2;opacity:.32;
+  background:
+    radial-gradient(circle at 30% 35%,rgba(255,255,255,.9),transparent 2%),
+    radial-gradient(circle at 70% 25%,rgba(255,255,255,.8),transparent 2%),
+    radial-gradient(circle at 55% 75%,rgba(255,255,255,.7),transparent 2%),
+    radial-gradient(circle at 15% 80%,rgba(255,255,255,.8),transparent 2%);
+  background-size:170px 170px,230px 230px,190px 190px,260px 260px;
+  filter:blur(10px)
+}
+.page.general{background:#edf1ef}
+.page.spring{background:#f4eee9}
+.page.spring::before{
+  background:
+    radial-gradient(circle at 75% 18%,rgba(255,205,218,.34),transparent 25%),
+    radial-gradient(circle at 18% 70%,rgba(255,220,231,.28),transparent 30%),
+    linear-gradient(135deg,#f3eee9,#e8efeb)
+}
+.page.summer{background:#eaf0e8}
+.page.summer::before{
+  background:
+    radial-gradient(circle at 75% 18%,rgba(177,210,181,.38),transparent 28%),
+    radial-gradient(circle at 20% 70%,rgba(203,225,197,.35),transparent 32%),
+    linear-gradient(135deg,#eaf0e9,#e3ece7)
+}
+.page.autumn{background:#eee8df}
+.page.autumn::before{
+  background:
+    radial-gradient(circle at 72% 20%,rgba(230,190,142,.34),transparent 28%),
+    radial-gradient(circle at 18% 72%,rgba(218,170,128,.25),transparent 32%),
+    linear-gradient(135deg,#eee9e1,#e8e4dd)
+}
+.page.winter{background:#e9eef1}
+.page.winter::before{
+  background:
+    radial-gradient(circle at 75% 18%,rgba(210,225,237,.55),transparent 30%),
+    radial-gradient(circle at 18% 72%,rgba(255,255,255,.7),transparent 34%),
+    linear-gradient(135deg,#e7edf1,#dce6eb)
+}
+
+/* 계절별 나무 */
+.tree{
+  position:absolute;right:-35px;bottom:-10px;width:260px;height:430px;
+  opacity:.16;z-index:-1
+}
+.tree::before{
+  content:"";position:absolute;bottom:0;left:105px;width:28px;height:340px;
+  background:#505c57;border-radius:50% 50% 8% 8%;transform:rotate(4deg)
+}
+.tree::after{
+  content:"";position:absolute;bottom:230px;left:70px;width:180px;height:180px;
+  border-radius:50%;background:#7b8f7d;
+  box-shadow:-80px 30px 0 -12px #879b87,45px 20px 0 -8px #748b77,-35px -35px 0 -15px #91a591
+}
+.spring .tree::after{
+  background:#d9a6b6;
+  box-shadow:-75px 30px 0 -10px #e2b1c0,50px 15px 0 -8px #d79eaf,-35px -40px 0 -13px #e7bbc8
+}
+.summer .tree::after{
+  background:#789879;
+  box-shadow:-75px 30px 0 -10px #87a887,50px 15px 0 -8px #6e906f,-35px -40px 0 -13px #96b097
+}
+.autumn .tree::after{
+  background:#b88955;
+  box-shadow:-75px 30px 0 -10px #d29b58,50px 15px 0 -8px #a96842,-35px -40px 0 -13px #c47c45
+}
+.winter .tree::before{width:20px;left:112px;height:350px}
+.winter .tree::after{
+  width:8px;height:185px;left:118px;bottom:220px;border-radius:0;
+  background:#59636a;transform:rotate(-27deg);
+  box-shadow:42px -18px 0 -1px #59636a,-42px -35px 0 -1px #59636a,
+              66px -58px 0 -2px #59636a,-67px -70px 0 -2px #59636a
+}
+.snow{
+  position:absolute;inset:0;z-index:-1;opacity:.35;
+  background-image:radial-gradient(circle,white 0 3px,transparent 4px),
+                   radial-gradient(circle,white 0 2px,transparent 3px);
+  background-size:90px 90px,145px 145px;
+  background-position:20px 10px,70px 55px
+}
+
+/* 표지 */
+.cover{
+  min-height:100svh;text-align:center;align-items:center;justify-content:center;
+  padding:50px 28px;background:#0f1a1d;color:#f3f5f2
+}
+.cover::before{
+  background:
+    radial-gradient(circle at 50% 35%,rgba(157,190,184,.28),transparent 28%),
+    radial-gradient(circle at 20% 80%,rgba(120,151,148,.18),transparent 30%),
+    linear-gradient(150deg,#142328,#0b1418 65%,#18272b)
+}
+.cover::after{opacity:.2}
+.cover h1{
+  margin:0;font-size:clamp(2.1rem,9vw,4.2rem);letter-spacing:-.055em;
+  font-weight:800;line-height:1.25
+}
+.cover .english{margin-top:25px;font-size:.95rem;letter-spacing:.28em;opacity:.65}
+.cover .quote{margin-top:80px;max-width:28em;font-size:1rem;line-height:2.2;opacity:.88}
+.cover .author{margin-top:65px;letter-spacing:.18em;opacity:.72}
+
+/* 속표지 */
+.title-page{text-align:center;align-items:center;background:#f2f2ee}
+.title-page h1{
+  margin:0;font-size:clamp(2rem,8vw,3.4rem);letter-spacing:-.05em;line-height:1.35
+}
+.title-page .lead{margin-top:55px;max-width:25em;font-size:1rem;line-height:2.15}
+.title-page .author{margin-top:60px}
+
+/* 목차 */
+.toc{justify-content:flex-start;padding-top:75px}
+.toc h2{text-align:center;font-size:2rem;margin:0 0 45px}
+.toc-part{margin-bottom:35px}
+.toc-part h3{margin:0;font-size:1.2rem}
+.toc-part .sub{color:#69716e;font-size:.9rem;margin:2px 0 15px}
+.toc-season{margin:10px 0 3px;font-size:.72rem;letter-spacing:.2em;color:#7b8580}
+.toc-title{margin:0 0 5px;font-size:.98rem}
+
+/* 파트 */
+.part{text-align:center;align-items:center}
+.part .part-number{font-size:.78rem;letter-spacing:.28em;color:#7c8580}
+.part h2{margin:18px 0 8px;font-size:2rem;letter-spacing:-.04em}
+.part .part-sub{color:#68716d;font-size:.95rem}
+.part .part-text{max-width:27em;margin-top:50px;font-size:.98rem;line-height:2.15;color:#4e5652}
+
+/* 작품 */
+.work{justify-content:flex-start;padding-top:80px}
+.work-title{font-size:1.5rem;line-height:1.5;letter-spacing:-.045em;margin:0 0 55px;font-weight:700}
+.work-text{font-size:1rem;line-height:2.18}
+.work-text p{margin:0 0 1.25em}
+.work-number{
+  position:absolute;bottom:28px;left:0;right:0;text-align:center;
+  font-size:.7rem;letter-spacing:.15em;color:#87908b
+}
+
+/* 에필로그 */
+.epilogue{text-align:center;align-items:center}
+.epilogue-label{font-size:.75rem;letter-spacing:.3em;color:#77817d}
+.epilogue h2{margin:20px 0 0;font-size:2rem}
+.epilogue p{max-width:26em;margin-top:50px;line-height:2.15}
+
+/* 마지막 */
+.final{text-align:center;align-items:center;background:#f0eee8}
+.final p{margin:0;font-size:1rem;line-height:2.2}
+.final .signature{margin-top:55px}
+
+@media(max-width:480px){
+  .page{padding-left:25px;padding-right:25px}
+  .work-title{font-size:1.35rem}
+  .work-text{font-size:.96rem}
+  .tree{right:-85px;opacity:.11}
+}
+@media print{
+  body{background:white}
+  .page{min-height:100vh;page-break-after:always}
+}
+</style>
+</head>
+
+<body>
+<main class="book">
+
+<!-- COVER -->
+<section class="page cover">
+  <h1>내가 몰랐던<br>또 다른 계절</h1>
+  <div class="english">ANOTHER SEASON</div>
+  <div class="quote">
+    너를 만나기 전의 나는 없었다.<br>
+    너를 지나온 지금의 나는 있다.
+  </div>
+  <div class="author">이안 지음</div>
+</section>
+
+<!-- TITLE PAGE -->
+<section class="page title-page">
+  <h1>내가 몰랐던 또 다른 계절</h1>
+  <div class="lead">
+    우리는<br>
+    봄을 만나고<br>
+    여름을 지나<br>
+    가을을 보내고<br>
+    겨울을 맞이한다.<br><br>
+    분명 계절은 네 번뿐인 줄 알았는데,<br>
+    내가 미처 알지 못했던 또 하나의 계절이 있었다.<br>
+    그 계절은 너였고, 그 안에는 내가 있었다.
+  </div>
+  <div class="author">이안 지음</div>
+</section>
+
+<!-- TOC 1 -->
+<section class="page toc">
+  <h2>목차</h2>
+  <div class="toc-part">
+    <h3>1부 — 첫 번째 계절</h3>
+    <div class="sub">너를 만난 이야기</div>
+    <div class="toc-season">SPRING</div>
+    <div class="toc-title">봄은 반드시 올 거야</div>
+    <div class="toc-season">SUMMER</div>
+    <div class="toc-title">그 해 8월의 거짓말</div>
+    <div class="toc-season">AUTUMN</div>
+    <div class="toc-title">무채색들이 색을 입으며 세상을 바꿔</div>
+    <div class="toc-season">WINTER</div>
+    <div class="toc-title">13월에 맞이한 겨울은</div>
+  </div>
+  <div class="toc-part">
+    <h3>2부 — 두 번째 계절</h3>
+    <div class="sub">너와 함께한 즐거운 시간</div>
+    <div class="toc-season">SPRING</div>
+    <div class="toc-title">4월의 밤은 시간이 빠르게 흘렀어</div>
+    <div class="toc-season">SUMMER</div>
+    <div class="toc-title">그 해 여름은 유난히도 길었어</div>
+    <div class="toc-title">끝나지 않은 너와의 여름 이야기</div>
+    <div class="toc-season">AUTUMN</div>
+    <div class="toc-title">가장 빛났던 가을</div>
+    <div class="toc-season">WINTER</div>
+    <div class="toc-title">따뜻했던 그 겨울밤</div>
+  </div>
+</section>
+
+<!-- TOC 2 -->
+<section class="page toc">
+  <h2>목차</h2>
+  <div class="toc-part">
+    <h3>3부 — 세 번째 계절</h3>
+    <div class="sub">너와 헤어짐</div>
+    <div class="toc-season">SPRING</div>
+    <div class="toc-title">함께 사라진 나의 봄은</div>
+    <div class="toc-title">나의 마음이 너에게 닿기를 바라던 봄</div>
+    <div class="toc-season">SUMMER</div>
+    <div class="toc-title">그 여름 장마는 그렇게 끝났어</div>
+    <div class="toc-title">다신 오지 않을 여름</div>
+    <div class="toc-season">AUTUMN</div>
+    <div class="toc-title">노란빛 빨간빛 죽어 가는 가을</div>
+    <div class="toc-title">찾을 수 없는 너의 가을</div>
+    <div class="toc-title">추억 속에 살아가는 가을</div>
+    <div class="toc-season">WINTER</div>
+    <div class="toc-title">기대를 했던 그 겨울</div>
+    <div class="toc-title">눈이 내리던 날</div>
+  </div>
+  <div class="toc-part">
+    <h3>EPILOGUE</h3>
+    <div class="toc-season">WINTER</div>
+    <div class="toc-title">보이지 않은 그 겨울</div>
+    <div class="toc-season">SPRING</div>
+    <div class="toc-title">일 년이 지나 다시 찾아온 봄</div>
+  </div>
+</section>
+
+<!-- PART 1 -->
+<section class="page part spring">
+  <div class="part-number">FIRST SEASON</div>
+  <h2>첫 번째 계절</h2>
+  <div class="part-sub">너를 만난 이야기</div>
+  <div class="part-text">
+    너를 만나기 전의 나는<br>
+    내가 살아가는 세상만 바라보고 있었다.<br><br>
+    그런데 너를 만난 뒤<br>
+    내가 보지 못했던 계절이 하나씩 나타나기 시작했다.
+  </div>
+</section>
+
+<!-- 01 -->
+<section class="page work spring">
+  <div class="tree"></div>
+  <h2 class="work-title">봄은 반드시 올 거야</h2>
+  <div class="work-text">
+    넌<br>
+    어째서? 내 깊은 어둠을 자꾸 들춰내는 거야.<br>
+    왜? 내 상처를 자꾸 건드리는 거야.<br>
+    생각하기 싫은 걸 자꾸 생각나게 하는 거야.<br>
+    나는 그게 두렵고 무섭단 말이야.<br>
+    너도 알고 있으면서 그걸 아무렇지 않게 내 앞에서 태연하게 꺼내는 거야.<br>
+    그리곤 너는 말했어.<br>
+    “괜찮아 내가 있잖아 더 이상 혼자가 아니잖아.”<br>
+    온갖 핑계를 대며 피하려 했어.<br>
+    넌 내 마음속을 들여다본 것 같았어.<br>
+    “그러니 피하지 마 틀에 갇혀 있지 마 그리고 나를 믿어 그런 너에게 용기를 줄게.”<br>
+    너를 믿어 보기로 했어.<br>
+    용기를 가져 보기로 했어.<br><br>
+    그해 봄, 떨어지는 벚꽃잎은 바람과 함께 춤을 췄어.
+  </div>
+  <div class="work-number">01</div>
+</section>
+
+<!-- 02 -->
+<section class="page work summer">
+  <div class="tree"></div>
+  <h2 class="work-title">그 해 8월의 거짓말</h2>
+  <div class="work-text">
+    깊은 밤<br>
+    색이 없는 하늘<br>
+    소리 없는 도시<br>
+    불빛 없는 거리<br>
+    내가 유일하게 밖을 나서는 시간.<br>
+    맞아, 내가 보는 세상에는 색이 없어.<br>
+    그러다 너를 만났어.<br>
+    오랜만이었어.<br>
+    너는 예전과 다른 게 없었어. 그대로였지.<br>
+    항상 밝고 즉흥적이고 주변에 좋은 에너지를 줬어.<br>
+    나를 매번 이끌어줬어. 밝은 세계로.<br>
+    너의 규칙 없는 자유로움이 나는 부러웠어.<br>
+    밝은 세상에서 본 너는 아름다웠어.<br>
+    우린 밤에 자주 만났어.<br>
+    나는 밝은 세상이 힘들었어.<br>
+    내 눈에는 그곳의 색이 너무 낯설었거든.<br>
+    그리고 네 눈을 바라봤어.<br>
+    어째서 네 눈에 비친 세상은 색깔이 있어?<br><br>
+    세상에 조금씩 색이 입혀지기 시작한 8월이었어.<br>
+    나는 그렇게 믿었어.
+  </div>
+  <div class="work-number">02</div>
+</section>
+
+<!-- 03 -->
+<section class="page work autumn">
+  <div class="tree"></div>
+  <h2 class="work-title">무채색들이 색을 입으며 세상을 바꿔</h2>
+  <div class="work-text">
+    너를 만나기 전<br>
+    뜨겁게 빛나는 하늘 아래 나는 눈살을 찌푸리며 하늘을 올려다봐.<br>
+    볼 수 없는 걸 알면서 무엇이 보고 싶었을까?<br>
+    세상에는 초록색으로 가득해.<br>
+    빛으로 가득한 길을 어둡게 만들어주기도 해.<br>
+    그 어둠이 우리에게 쉼을 줘.<br>
+    하지만 그 쉼은 오래가지 않았어.<br>
+    초록색들이 노랑으로 변하고<br>
+    초록색들이 빨강으로 변하고<br>
+    하늘은 주황으로 변했어.<br>
+    그리고 네가 나타났지.<br>
+    마치 무대에 서 있는 것 같았어.<br>
+    네 위에는 노랑과 빨강으로 가득했고<br>
+    네 뒤에는 주황으로 가득했으니<br>
+    그리고 연기를 하듯 나에게 말을 걸어.<br>
+    알록달록한 세상은 날 위한 선물이래.<br>
+    한 가지 마음밖에 몰랐던 나라며<br>
+    여러 가지 마음을 줄 거래.<br>
+    그중 하나는 자기래.<br>
+    그 말에 나는 팔을 벌렸고<br>
+    노란 단풍과 빨간 낙엽들이 너에게<br>
+    길을 만들어주었고<br>
+    너는 그 길을 따라 달리며 나에게 안겼어.<br>
+    그리고 주황색을 띤 저녁노을은<br>
+    우리에게 따뜻한 조명이 되어 줬어.
+  </div>
+  <div class="work-number">03</div>
+</section>
+
+<!-- 04 -->
+<section class="page work winter">
+  <div class="tree"></div><div class="snow"></div>
+  <h2 class="work-title">13월에 맞이한 겨울은</h2>
+  <div class="work-text">
+    눈이 내리던 겨울이었어.<br>
+    이맘때면 너를 떠올려.<br>
+    아무것도 없는 나를 좋아해 줬으니<br>
+    걸으며 보았던 도시의 작은 불빛에도 좋아했고<br>
+    하늘에서 내리는 눈을 맞아도 좋아했고<br>
+    눈이 쌓인 놀이터에서 데이트를 좋아했고<br>
+    까만 밤하늘에서 하얀 눈이 내리는 걸 바라보며<br>
+    공원에서 함께 맥주 한 캔을 마시는 것도 좋아했고<br>
+    12월 크리스마스에 반짝이는 거리와<br>
+    반짝이는 트리를 보며 좋아했고<br>
+    12월이 끝나고 너에겐 새해가 오겠지.<br>
+    나에겐 아직 끝나지 않은 너와의 13월이 시작됐어.
+  </div>
+  <div class="work-number">04</div>
+</section>
+
+<!-- PART 2 -->
+<section class="page part spring">
+  <div class="part-number">SECOND SEASON</div>
+  <h2>두 번째 계절</h2>
+  <div class="part-sub">너와 함께한 즐거운 시간</div>
+  <div class="part-text">
+    계절은 계속 흘러갔고<br>
+    우리는 함께 많은 시간을 보냈다.<br><br>
+    평범했던 하루도<br>
+    너와 함께라면 특별한 계절이 되었다.
+  </div>
+</section>
+
+<!-- 05 -->
+<section class="page work spring">
+  <div class="tree"></div>
+  <h2 class="work-title">4월의 밤은 시간이 빠르게 흘렀어</h2>
+  <div class="work-text">
+    오늘 하루 즐겁게 보내고 헤어져 집에 돌아가는 길,<br>
+    뒤를 돌아봐. 네 방에 불이 켜지는 걸 보고서야 안심하고 발길을 돌려.<br>
+    가는 길에 전화를 걸어.<br>
+    방금까지 전화했는데 또 무슨 할 말이 있었을까?<br>
+    핸드폰 너머로 들리는 너의 목소리에<br>
+    나는 아직도 네가 내 옆에 있는 것만 같았어.<br>
+    어느새 나는 집에 도착했지.<br>
+    집에 갈 때까지 나를 지켜준 너에게<br>
+    “고마워 잘 자”라는 말을 남기고 전화를 끊었지.<br>
+    침대에 누워 오늘 하루 즐거웠던 기억을 되새기며 장면 하나하나를 필름으로 남겨.<br>
+    우리 내년에도 함께 오늘을 기억하겠지?
+  </div>
+  <div class="work-number">05</div>
+</section>
+
+<!-- 06 -->
+<section class="page work summer">
+  <div class="tree"></div>
+  <h2 class="work-title">그 해 여름은 유난히도 길었어</h2>
+  <div class="work-text">
+    언제부터 시작이었을까?<br>
+    우리가 처음 만난 그곳에서 여름이 시작된 것 같아.<br>
+    불이 켜진 낮에는 따뜻했고<br>
+    불이 꺼진 밤에는 조금은 쌀쌀했지.<br>
+    우린 함께 여름을 어색하게 마주했어.<br>
+    항상 느리게만 가던 시간은<br>
+    네 생각할 땐 빠르게 흘렀지.<br>
+    하루하루가 빠르게 지나갔어.<br>
+    그래야 널 만날 수 있는 날이 다가왔거든.<br>
+    널 만날 때마다 엄청 좋았어. 즐거웠어.<br>
+    특히 너와 내가 서로 눈빛이 마주할 때<br>
+    그땐 하나가 된 것 같았어.<br>
+    그렇게 여름이 끝나갈 때 즈음<br>
+    우린 가을을 준비하고 있었어.<br>
+    하지만 너는 여름과 함께 사라져 버리고<br>
+    가을은 나 혼자 맞이하게 됐어.<br>
+    왜?라는 말만 반복하니 가을이 왔어.<br>
+    다시 시간은 느리게 움직이기 시작했지.<br>
+    그 해 여름은 너와 함께한 시간이어서 그런지 유난히도 길었어.
+  </div>
+  <div class="work-number">06</div>
+</section>
+
+<!-- 07 -->
+<section class="page work summer">
+  <div class="tree"></div>
+  <h2 class="work-title">끝나지 않은 너와의 여름 이야기</h2>
+  <div class="work-text">
+    함께한 시간과 추억이<br>
+    몇 번의 계절이 지났는지도 모를 정도야.<br>
+    계절은 지났지만 너의 모습은 그대로였어.<br>
+    마치 그 계절을 지키는 요정처럼 말이야.<br>
+    가을이 지나 겨울이 오고<br>
+    겨울이 지나 봄이 오고<br>
+    봄이 지나 여름이 왔어.<br>
+    지금의 너는 자연과도 같았어.<br>
+    향기를 따라가니 너를 만날 수 있었거든.<br>
+    널 보는 나의 모습도 그대로였지.<br>
+    비가 오고 나서야 여름은 끝났지만<br>
+    변하지 않은 우리의 여름은 아직 끝나지 않았어.
+  </div>
+  <div class="work-number">07</div>
+</section>
+
+<!-- 08 -->
+<section class="page work autumn">
+  <div class="tree"></div>
+  <h2 class="work-title">가장 빛났던 가을</h2>
+  <div class="work-text">
+    세상에 빛이 있다는 걸 알고<br>
+    밖을 나서 그 빛을 바라보던 계절.<br>
+    빛나는 세상은 아름답다고 나를 이끌어주었지.<br>
+    덕분에 나는 세상을 알아가기 시작했어.<br>
+    빨간 단풍도 노란 은행도<br>
+    푸른 하늘도 하얀 구름도<br>
+    주위를 맴도는 잠자리도<br>
+    평소에는 몰랐지만 서서 보니 너무나도 아름다웠어.<br>
+    너는 내 세상이었어.<br>
+    그리고 너는 빛났어.
+  </div>
+  <div class="work-number">08</div>
+</section>
+
+<!-- 09 -->
+<section class="page work winter">
+  <div class="tree"></div><div class="snow"></div>
+  <h2 class="work-title">따뜻했던 그 겨울밤</h2>
+  <div class="work-text">
+    꿈도 없고 목표도 없이 하루하루를 살았어.<br>
+    의미도 없고 사는 것도 버거웠지.<br>
+    절망에 빠져 있는 나에게 다가온 너.<br>
+    너의 손이 나의 어깨를 감싸니<br>
+    너의 따뜻함이 나에게 전해져 왔어.<br>
+    마치 녹아버린 눈은 뽀송해지며 눈사람이 되고<br>
+    얼어버린 고드름은 눈이 되어 하늘에서 내리고<br>
+    추워만 하던 우리 집은 하얀 옷을 입었지.<br>
+    쌀쌀해서 그런지 너의 말에는 온기가 있었지.<br><br>
+    넌 왜 나를 응원하는 거야?<br>
+    왜 내게 희망을 주는 거야?<br><br>
+    너의 따뜻함이 나의 미래를 결정했다.
+  </div>
+  <div class="work-number">09</div>
+</section>
+
+<!-- PART 3 -->
+<section class="page part spring">
+  <div class="part-number">THIRD SEASON</div>
+  <h2>세 번째 계절</h2>
+  <div class="part-sub">너와 헤어짐</div>
+  <div class="part-text">
+    계절은 다시 흘렀다.<br>
+    하지만 이번에는<br>
+    너와 함께가 아니었다.<br><br>
+    함께했던 계절이 지나고<br>
+    나는 혼자 계절을 맞이했다.
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="page work spring">
+  <div class="tree"></div>
+  <h2 class="work-title">함께 사라진 나의 봄은</h2>
+  <div class="work-text">
+    수줍게 바라보는 눈빛 마주치는 순간<br>
+    넌 부끄러운지 고개를 돌렸지.<br>
+    난 그게 너무 귀여워 보였어.<br>
+    멀지 않은 내 미래에 널 초대했어.<br>
+    따뜻한 봄에 함께 벚꽃을 보러 가기로 했지.<br>
+    초대에 수긍한 너는 미소를 지으며 헤어졌어.<br>
+    나는 그날 밤 잠을 잘 수가 없었어.<br>
+    나는 이미 그 미래를 상상하고 있었거든.<br>
+    네가 뱉은 말에 어떻게 대답할지 몰라서<br>
+    이상한 대답을 해버렸어.<br>
+    그게 다 보였는지<br>
+    내 엉뚱한 대답에 너는 웃었어.<br>
+    그렇게 즐거워하며 나도 모르게 잠이 들었어.<br>
+    이제 내 미래가 현실로 이루어지면 된다고 생각하며 장소로 나왔어.<br>
+    한 시간을 기다리고<br>
+    두 시간을 기다리고<br>
+    벚꽃잎은 떨어지고<br>
+    세 시간을 기다리고<br>
+    네 시간째 기다렸어.<br>
+    밤하늘에 비가 내리듯<br>
+    하얀 벚꽃잎이 다 떨어졌어.<br>
+    그 벚꽃잎들과 함께 나의 봄은 사라졌어.
+  </div>
+  <div class="work-number">10</div>
+</section>
+
+<!-- 11 -->
+<section class="page work spring">
+  <div class="tree"></div>
+  <h2 class="work-title">나의 마음이 너에게 닿기를 바라던 봄</h2>
+  <div class="work-text">
+    서로 몸이 멀어졌다고 마음도 멀어지더라.<br>
+    서로 마음이 멀어졌다고 몸도 멀어지더라.<br><br>
+    우린 서로 말하지는 않았지만 당연하듯<br>
+    멀어졌어. 마치 정해진 것처럼.<br>
+    이것 또한 운명이겠지라고 생각했어.<br><br>
+    하루가 지나고 이틀이 지나<br>
+    눈 뜨면 모든 것이 꿈일 거라 생각했지.<br><br>
+    오늘따라 찬란한 빛이 너무 미웠어.<br>
+    너의 빈자리가 더욱 느껴지게 했으니<br><br>
+    나는 이만 너의 세상에서 사라지려 해.<br>
+    내가 사라지면 내 마음만 남겠지.<br>
+    내 마음을 너에게 줄게.<br>
+    내 마음을 벚꽃들과 함께 바람이 너에게 데려다줄 거야.<br>
+    내 마음을 가지고 평생 잊지 못했으면 좋겠어.
+  </div>
+  <div class="work-number">11</div>
+</section>
+
+<!-- 12 -->
+<section class="page work summer">
+  <div class="tree"></div>
+  <h2 class="work-title">그 여름 장마는 그렇게 끝났어</h2>
+  <div class="work-text">
+    깊은 밤 울리지 않는 핸드폰을 들어<br>
+    술 한 잔의 힘을 빌렸지.<br>
+    핸드폰 화면에는 너의 이름이 떠 있어.<br>
+    통화 버튼을 누를까 말까 망설이다가<br>
+    오늘도 결국 전화를 걸지 못했지.<br>
+    너에게 할 말을 준비했는데<br>
+    나 혼자만 기다리는 것 같아서<br>
+    창문 너머를 바라보며 다음을 기다려.<br>
+    너의 전화번호는 1번으로 저장된 채<br>
+    그 여름의 장마는 그렇게 끝났어.
+  </div>
+  <div class="work-number">12</div>
+</section>
+
+<!-- 13 -->
+<section class="page work summer">
+  <div class="tree"></div>
+  <h2 class="work-title">다신 오지 않을 여름</h2>
+  <div class="work-text">
+    얼마 전까지만 해도 함께였던 우리<br>
+    세상을 함께 보며 함께 걷고 함께 여름 향을 맡았지.<br>
+    마치 여름은 우리와 하나 같았고<br>
+    나무들은 멋진 액세서리가 되어 줬고<br>
+    새들은 아름다운 음악을 들려주었고<br>
+    첫 햇살이 우리를 비춰 줘.<br>
+    그 여름 우린 분명히 좋았어.<br>
+    시간이 흐르고<br>
+    계절은 몇 번이나 우리를 지나갔어.<br>
+    이제는 바람처럼 스쳐 지나가는 사이가 됐어.<br>
+    나무들도 나에게 아무런 말을 하지 않고<br>
+    새들도 앉아서 나를 지켜보기만 해.<br>
+    첫 햇살을 다신 보지 못했어.<br>
+    우리는 서로가 몰랐던 시간으로 돌아갔어.
+  </div>
+  <div class="work-number">13</div>
+</section>
+
+<!-- 14 -->
+<section class="page work autumn">
+  <div class="tree"></div>
+  <h2 class="work-title">노란빛 빨간빛 죽어 가는 가을</h2>
+  <div class="work-text">
+    모든 것이 잘 풀려 갔어.<br>
+    계획대로 흘러갔지.<br>
+    하지만 눈물이 흐르는 이유는 왜일까?<br>
+    사실 나는 알고 있었어.<br>
+    네가 나에게 남긴 마지막 편지를 보고선 말야.<br>
+    그 편지의 마지막은 ‘잘 지내~’로 끝났어.<br>
+    넌 그렇게 도망가기를 선택했어.<br>
+    마치 가을에 단풍과 낙엽들이 생명을 다하고 떨어지듯<br>
+    나에 대한 너의 감정을 죽이고 있는 거겠지.<br><br>
+    가을은 나에게 행복한 시간이었지만<br>
+    너에게는 마지막을 준비하는 시간이었구나.
+  </div>
+  <div class="work-number">14</div>
+</section>
+
+<!-- 15 -->
+<section class="page work autumn">
+  <div class="tree"></div>
+  <h2 class="work-title">찾을 수 없는 너의 가을</h2>
+  <div class="work-text">
+    아무리 찾으려 해도 찾을 수 없었어.<br>
+    너와 함께했던 추억을 곱씹으며<br>
+    닿을 수 있는 곳은 다 가보았지만<br>
+    넌 그 어디에도 없었어.<br>
+    어디서부터 잘못된 걸까?<br>
+    어디서부터 잃어버린 걸까?<br>
+    아무것도 할 수 없는 내게 화가 났어.<br>
+    하늘을 향해 소리쳐 보지만<br>
+    돌아오는 건 메아리뿐이었어.<br>
+    그리고 떨어지는 노란 잎 빨간 잎<br>
+    그 사이에 비친 네 모습.<br>
+    넌 항상 내 앞에 있었지만<br>
+    내 눈엔 네가 보이지 않았던 거야.
+  </div>
+  <div class="work-number">15</div>
+</section>
+
+<!-- 16 -->
+<section class="page work autumn">
+  <div class="tree"></div>
+  <h2 class="work-title">추억 속에 살아가는 가을</h2>
+  <div class="work-text">
+    우리는 길을 따라 걸어.<br>
+    우리를 따라 구름도 빠르게 움직이고<br>
+    하늘은 파랗게 우리 마음을 푸르게 만들어주고<br>
+    바람은 선선한 게 기분이 좋았어.<br>
+    그렇게 공원을 걸으며 서로를 알아갔지.<br>
+    난 너의 마음에서 나오는 향기에 취해버렸는지도 몰라.<br><br>
+    어느 날이었어.<br>
+    너는 분명히 평소와 다를 게 없었어.<br>
+    하지만 어째서...<br>
+    너는 멈췄지.<br>
+    주변을 돌아보니<br>
+    구름도 움직임이 멈췄고<br>
+    바람도 네 주변에서 머물다 멈췄어.<br>
+    시간도 멈추고 모든 게 다 멈췄어.<br>
+    모든 걸 움직이게 하는 방법을 몰랐어.<br>
+    나는 결국 너의 곁을 떠났고<br>
+    너는 그 자리에 남았지만<br>
+    너의 향기는 낙엽과 함께 날아가고<br>
+    나에겐 추억만 남았지.
+  </div>
+  <div class="work-number">16</div>
+</section>
+
+<!-- 17 -->
+<section class="page work winter">
+  <div class="tree"></div><div class="snow"></div>
+  <h2 class="work-title">기대를 했던 그 겨울</h2>
+  <div class="work-text">
+    네가 말한 겨울이 왔어.<br>
+    우린 약속했었지.<br>
+    세 번째 겨울이 왔을 때 그때<br>
+    눈이 내리는 날 그때<br>
+    우리는 노거수 아래에서 만나기로<br>
+    이날을 기다렸어.<br>
+    첫 번째 겨울 눈이 왔을 때<br>
+    너무 힘들었어. 네 생각만 했지.<br>
+    두 번째 겨울 눈이 왔을 때<br>
+    이제 얼마 남지 않았구나. 네 생각을 했어.<br>
+    세 번째 겨울 눈이 왔어.<br>
+    널 만났어.<br>
+    하지만 그저 무덤덤했어.<br>
+    삼 년이라는 시간 동안 우리의 연결고리는 끊어져 있었어.<br>
+    넌 그걸 알고선<br>
+    삼 년 후 겨울 눈이 왔을 때 만나자는 약속을 한 거구나.<br>
+    그 겨울의 약속은 기대한 만큼 상처로 돌아왔어.
+  </div>
+  <div class="work-number">17</div>
+</section>
+
+<!-- 18 -->
+<section class="page work winter">
+  <div class="tree"></div><div class="snow"></div>
+  <h2 class="work-title">눈이 내리던 날</h2>
+  <div class="work-text">
+    너는 이끌리듯 차가운 바닷속으로 들어가고 있어.<br>
+    나는 너를 있는 힘껏 불렀어.<br>
+    너는 무슨 생각인 걸까?<br>
+    도대체 왜 그러는 걸까?<br>
+    무엇으로부터 도망치고 싶은 걸까?<br>
+    도와주고 싶었어.<br>
+    너의 마음을 알고 싶었어.<br>
+    말하지 않으면 모르는 네 마음에<br>
+    다가갈 수조차 없었어.<br>
+    그렇게 나는 그 자리에 서 있었어.<br>
+    눈이 하나둘 쌓이고<br>
+    어느새 움직일 수도 없는 눈사람이 되어<br>
+    멀리서 널 지켜볼 수밖에 없었어.
+  </div>
+  <div class="work-number">18</div>
+</section>
+
+<!-- EPILOGUE 1 -->
+<section class="page epilogue winter">
+  <div class="tree"></div><div class="snow"></div>
+  <div class="epilogue-label">EPILOGUE</div>
+  <h2>보이지 않은 그 겨울</h2>
+  <p>
+    모든 계절이 지나고<br>
+    보이지 않는 계절을 지나<br>
+    다시 새로운 계절을 기다린다.
+  </p>
+</section>
+
+<!-- 19 -->
+<section class="page work winter">
+  <div class="tree"></div><div class="snow"></div>
+  <h2 class="work-title">보이지 않은 그 겨울</h2>
+  <div class="work-text">
+    눈을 밟으며 걸어.<br>
+    마치 수많은 발자국들이 함께 걷는 듯<br>
+    내가 걸을 때마다 옆에 발자국이 있었어.<br>
+    외롭지 않았어. 네가 함께 나란히 걷는 것 같았지.<br>
+    나는 마음속으로 너와 함께 대화를 나눴어.<br>
+    너는 부끄러운지 소매에 손을 반쯤 넣더니<br>
+    입을 소매로 가리더라.<br>
+    그 모습에 나는 설레었어.<br>
+    그리고 나도 모르게 네 손을 잡았어.<br>
+    차가웠던 네 손은 조금씩 따뜻해졌지.<br>
+    우린 그렇게 서로의 마음을 확인했어.<br>
+    그리곤 너는 사라졌어.<br>
+    그날 겨울의 마지막 눈을 만났어.<br><br>
+    어쩌면 나는 미래의 너를 만난 건지도 몰라.<br>
+    너를 만날 준비를 하고 있을게.
+  </div>
+  <div class="work-number">19</div>
+</section>
+
+<!-- EPILOGUE 2 -->
+<section class="page epilogue spring">
+  <div class="tree"></div>
+  <div class="epilogue-label">EPILOGUE</div>
+  <h2>일 년이 지나 다시 찾아온 봄</h2>
+  <p>
+    겨울이 지나고<br>
+    다시 봄이 찾아왔다.<br><br>
+    끝났다고 생각했던 계절은<br>
+    어쩌면 다시 시작될 준비를 하고 있었는지도 모른다.
+  </p>
+</section>
+
+<!-- 20 -->
+<section class="page work spring">
+  <div class="tree"></div>
+  <h2 class="work-title">일 년이 지나 다시 찾아온 봄</h2>
+  <div class="work-text">
+    겨울잠을 자던 숲 속 동물 친구들도<br>
+    기지개를 켜며 밖으로 나오고<br>
+    겨울을 피해 땅속에서 버티던 나무와 꽃도<br>
+    기지개를 켜며 하늘로 솟아<br>
+    겨울을 보내며 집에만 있던 새들도<br>
+    기지개를 켜며 먼 하늘을 향해 날아다녀<br>
+    사람들도 하나둘씩 마을로 나오며<br>
+    아름다운 음악들도 나의 마음을 준비할 수 있게 도와줘.<br><br>
+    이제 너만 내 앞에 나타나면 돼.<br>
+    말하자마자 너는 저 멀리서 나타나기 시작했어.<br>
+    마치 너도 나를 준비하고 있었다는 듯<br>
+    수줍은 미소를 띠며 나에게 다가오고 있었지.<br><br>
+    우리는 일 년이란 시간이 지났지만<br>
+    나에겐 하룻밤을 자고 일어난 듯한 느낌이었어.<br>
+    일 년이란 시간을 오늘만 보고 생각하고 기다렸거든.<br>
+    마치 어제도 만났던 것처럼<br>
+    다른 생각을 하지 않았어.<br>
+    그래서 난 불안해하지 않고 기다릴 수 있었어.<br><br>
+    그리고 다시 찾아온 봄은<br>
+    우리의 사랑을 더욱더 애틋하게 만들어줬어.
+  </div>
+  <div class="work-number">20</div>
+</section>
+
+<!-- COPYRIGHT -->
+<section class="page title-page">
+  <h1>내가 몰랐던 또 다른 계절</h1>
+  <div class="lead">
+    ANOTHER SEASON
+    <br><br><br>
+    이안 지음
+    <br><br><br>
+    Copyright © 2026 이안<br>
+    All rights reserved.
+    <br><br>
+    이 책의 저작권은 저자에게 있습니다.<br>
+    저작권자의 동의 없이 본문의 일부 또는 전부를<br>
+    무단으로 복제, 배포, 전재할 수 없습니다.
+  </div>
+</section>
+
+<!-- FINAL PAGE -->
+<section class="page final">
+  <p>
+    봄을 만나고<br>
+    여름을 지나<br>
+    가을을 보내고<br>
+    겨울을 맞이했다.<br><br>
+    그리고 다시 봄이 찾아왔다.<br><br>
+    돌아보니<br>
+    내가 몰랐던 또 다른 계절은<br>
+    내가 살아온 모든 순간이었다.<br><br>
+    그 계절을 지나온 나는<br>
+    이제야 나를 만난다.
+  </p>
+  <div class="signature">이안</div>
+</section>
+
+</main>
+</body>
+</html>
